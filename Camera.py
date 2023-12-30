@@ -39,7 +39,7 @@ while True:
         print("Error: Could not read a frame.")
         break
     
-    if count = 10:
+    if count == 10:
         
 
         # Get data from Firebase
