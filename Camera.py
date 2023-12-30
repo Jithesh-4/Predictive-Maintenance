@@ -112,9 +112,10 @@ while True:
     frame = cv2.resize(frame, (display_width, display_height))
 
     cv2.imshow('Webcam', frame)
+    count = count + 1
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        count = count + 1
+        
         break
 
 cap.release()
