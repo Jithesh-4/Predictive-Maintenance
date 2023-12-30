@@ -18,6 +18,8 @@ temp = '/TEMPERATURE'
 vis = '/OIL VISCOSITY'
 volt = '/VOLTAGE'
 
+count = 0
+
 display_width = 2020  # Set the desired width
 display_height = 1000  # Set the desired height
 
@@ -36,41 +38,45 @@ while True:
     if not ret:
         print("Error: Could not read a frame.")
         break
+    
+    if count = 10:
+        
 
-    # Get data from Firebase
-    data0 = db.reference(belt).get()
-    data1 = db.reference(current).get()
-    data2 = db.reference(position).get()
-    data3 = db.reference(rpm).get()
-    data4 = db.reference(sound).get()
-    data5 = db.reference(temp).get()
-    data6 = db.reference(vis).get()
-    data7 = db.reference(volt).get()
+        # Get data from Firebase
+        data0 = db.reference(belt).get()
+        data1 = db.reference(current).get()
+        data2 = db.reference(position).get()
+        data3 = db.reference(rpm).get()
+        data4 = db.reference(sound).get()
+        data5 = db.reference(temp).get()
+        data6 = db.reference(vis).get()
+        data7 = db.reference(volt).get()
+    
+        if data0 is not None:
+            # Process the received data
+            print("Belt:", data0)
+            print("Current:", data1)
+            print("Position:", data2)
+            print("RPM:", data3)
+            print("Sound Decibel:", data4)
+            print("Temperature:", data5)
+            print("Viscosity:", data6)
+            print("Voltage:", data7)
+    
+            # Add your logic here to perform actions based on the received data
+            # For example, you can control GPIO pins, sensors, actuators, etc.
+    
+        # Generate random values for each sensor
+        sensor1_value = data0
+        sensor2_value = data1
+        sensor3_value = data2
+        sensor4_value = data3
+        sensor5_value = data4
+        sensor6_value = data5
+        sensor7_value = data6
+        sensor8_value = data7
 
-    if data0 is not None:
-        # Process the received data
-        print("Belt:", data0)
-        print("Current:", data1)
-        print("Position:", data2)
-        print("RPM:", data3)
-        print("Sound Decibel:", data4)
-        print("Temperature:", data5)
-        print("Viscosity:", data6)
-        print("Voltage:", data7)
-
-        # Add your logic here to perform actions based on the received data
-        # For example, you can control GPIO pins, sensors, actuators, etc.
-
-    # Generate random values for each sensor
-    sensor1_value = data0
-    sensor2_value = data1
-    sensor3_value = data2
-    sensor4_value = data3
-    sensor5_value = data4
-    sensor6_value = data5
-    sensor7_value = data6
-    sensor8_value = data7
-
+        count = 0
     # Draw rectangles and labels for each sensor
     cv2.rectangle(frame, (20, 50), (100, 150), (0, 255, 0), 2)
     cv2.putText(frame, f"Belt: {sensor1_value}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
@@ -102,6 +108,7 @@ while True:
     cv2.imshow('Webcam', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        count++
         break
 
 cap.release()
