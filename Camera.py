@@ -22,6 +22,7 @@ display_width = 2020  # Set the desired width
 display_height = 1000  # Set the desired height
 
 cap = cv2.VideoCapture(1)
+cap.set(cv2.CAP_PROP_FPS, 30)
 
 if not cap.isOpened():
     print("Error: Could not open the webcam.")
