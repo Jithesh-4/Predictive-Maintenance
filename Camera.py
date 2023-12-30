@@ -19,6 +19,14 @@ vis = '/OIL VISCOSITY'
 volt = '/VOLTAGE'
 
 count = 0
+sensor1_value = 0
+sensor2_value = 0
+sensor3_value = 0
+sensor4_value = 0
+sensor5_value = 0
+sensor6_value = 0
+sensor7_value = 0
+sensor8_value = 0
 
 display_width = 2020  # Set the desired width
 display_height = 1000  # Set the desired height
@@ -40,8 +48,6 @@ while True:
         break
     
     if count == 10:
-        
-
         # Get data from Firebase
         data0 = db.reference(belt).get()
         data1 = db.reference(current).get()
@@ -108,7 +114,7 @@ while True:
     cv2.imshow('Webcam', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        count++
+        count = count + 1
         break
 
 cap.release()
