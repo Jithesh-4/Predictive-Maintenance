@@ -5,7 +5,7 @@ import cv2
 import random
 
 # Replace with your Firebase project credentials
-cred = credentials.Certificate("/home/pi/Desktop/123/predictive-maintainence-1841d-firebase-adminsdk-oejc1-93d9f4abb4.json")
+cred = credentials.Certificate("/home/pi/Desktop/pmain/predictive-maintainence-1841d-firebase-adminsdk-oejc1-37178fae8b.json")
 firebase_admin.initialize_app(cred, {'databaseURL': 'https://predictive-maintainence-1841d-default-rtdb.firebaseio.com/'})
 
 # Define the path in the Firebase Realtime Database
@@ -17,6 +17,7 @@ sound = '/SOUND DECIBEL'
 temp = '/TEMPERATURE'
 vis = '/OIL VISCOSITY'
 volt = '/VOLTAGE'
+motor = '/MOTOR TEMPERATURE'
 
 count = 0
 sensor1_value = 0
@@ -27,6 +28,7 @@ sensor5_value = 0
 sensor6_value = 0
 sensor7_value = 0
 sensor8_value = 0
+sensor9_value = 0
 
 display_width = 2020  # Set the desired width
 display_height = 1000  # Set the desired height
@@ -47,7 +49,7 @@ while True:
         print("Error: Could not read a frame.")
         break
     
-    if count == 10:
+    if count == 15:
         # Get data from Firebase
         data0 = db.reference(belt).get()
         data1 = db.reference(current).get()
@@ -57,7 +59,7 @@ while True:
         data5 = db.reference(temp).get()
         data6 = db.reference(vis).get()
         data7 = db.reference(volt).get()
-    
+        data8 = db.reference(motor).get()
         if data0 is not None:
             # Process the received data
             print("Belt:", data0)
@@ -68,7 +70,7 @@ while True:
             print("Temperature:", data5)
             print("Viscosity:", data6)
             print("Voltage:", data7)
-    
+            print("Motor Temperature:", data8)
             # Add your logic here to perform actions based on the received data
             # For example, you can control GPIO pins, sensors, actuators, etc.
     
@@ -81,32 +83,36 @@ while True:
         sensor6_value = data5
         sensor7_value = data6
         sensor8_value = data7
+        sensor9_value = data8
 
         count = 0
     # Draw rectangles and labels for each sensor
-    cv2.rectangle(frame, (20, 50), (100, 150), (0, 255, 0), 2)
-    cv2.putText(frame, f"Belt: {sensor1_value}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+    cv2.rectangle(frame, (1100, 290), (1250, 390), (255, 0, 0), 2)
+    cv2.putText(frame, f"Belt: {sensor1_value}", (1100, 280), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
 
-    cv2.rectangle(frame, (120, 50), (200, 150), (255, 0, 0), 2)
-    cv2.putText(frame, f"Current: {sensor2_value}", (120, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
+    cv2.rectangle(frame, (900, 590), (1050, 690), (0, 255, 255), 2)
+    cv2.putText(frame, f"Current: {sensor2_value}", (900, 580), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
 
-    cv2.rectangle(frame, (220, 50), (300, 150), (0, 0, 255), 2)
-    cv2.putText(frame, f"Position: {sensor3_value}", (220, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+    cv2.rectangle(frame, (700, 440), (850, 540), (255, 255, 0), 2)
+    cv2.putText(frame, f"Position: {sensor3_value}", (700, 430), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
 
-    cv2.rectangle(frame, (320, 50), (400, 150), (255, 255, 0), 2)
-    cv2.putText(frame, f"RPM: {sensor4_value}", (320, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
+    cv2.rectangle(frame, (1100, 590), (1250, 690), (0, 255, 255), 2)
+    cv2.putText(frame, f"RPM: {sensor4_value}", (1100, 580), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
 
-    cv2.rectangle(frame, (20, 270), (100, 350), (255, 0, 255), 2)
-    cv2.putText(frame, f"Sound Decibel: {sensor5_value}", (20, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 2)
+    cv2.rectangle(frame, (450, 50), (600, 150), (0, 0, 255), 2)
+    cv2.putText(frame, f"dB Level: {sensor5_value}", (450, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
     
-    cv2.rectangle(frame, (120, 270), (200, 350), (255, 0, 255), 2)
-    cv2.putText(frame, f"Temperature: {sensor6_value}", (120, 270), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 2)
+    cv2.rectangle(frame, (650, 50), (800, 150), (0, 0, 255), 2)
+    cv2.putText(frame, f"Temperature: {sensor6_value}", (650, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
     
-    cv2.rectangle(frame, (220, 270), (300, 350), (255, 0, 255), 2)
-    cv2.putText(frame, f"Viscosity: {sensor7_value}", (220, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 2)
+    cv2.rectangle(frame, (220, 420), (370, 520), (255, 0, 0), 2)
+    cv2.putText(frame, f"Viscosity: {sensor7_value}", (220, 410), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
     
-    cv2.rectangle(frame, (320, 270), (620, 350), (255, 0, 255), 2)
-    cv2.putText(frame, f"Voltage: {sensor8_value}", (320, 270), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 255), 2)
+    cv2.rectangle(frame, (700, 590), (850, 690), (0, 255, 255), 2)
+    cv2.putText(frame, f"Voltage: {sensor8_value}", (700, 580), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+    
+    cv2.rectangle(frame, (900, 400), (1050, 500), (255, 255, 0), 2)
+    cv2.putText(frame, f"Cooler: {sensor9_value}", (900, 390), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
     
     # Resize the frame to the desired display size
     frame = cv2.resize(frame, (display_width, display_height))
@@ -115,7 +121,6 @@ while True:
     count = count + 1
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        
         break
 
 cap.release()
