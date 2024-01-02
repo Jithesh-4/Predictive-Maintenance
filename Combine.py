@@ -9,8 +9,8 @@ def run_script(script_path):
 
 if __name__ == "__main__":
     # Specify the paths to your Python files
-    python_file1 = "/home/pi/Desktop/123/main.py"
-    python_file2 = "/home/pi/Desktop/123/Camera.py"
+    python_file1 = "Pi.py"
+    python_file2 = "Camera.py"
 
     # Run the Python files simultaneously
     process1 = run_script(python_file1)
