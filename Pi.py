@@ -3,7 +3,7 @@ import time
 from firebase_admin import credentials, initialize_app, db
 
 # Replace the following with your Firebase project credentials
-cred = credentials.Certificate("/home/pi/Desktop/123/predictive-maintainence-1841d-firebase-adminsdk-oejc1-93d9f4abb4.json")
+cred = credentials.Certificate("/home/pi/Desktop/pmain/predictive-maintainence-1841d-firebase-adminsdk-oejc1-37178fae8b.json")
 firebase_app = initialize_app(cred, {"databaseURL": "https://predictive-maintainence-1841d-default-rtdb.firebaseio.com/"})
 
 # Replace this with the path where you want to store sensor data in Firebase
@@ -54,8 +54,8 @@ try:
         prev_time = current_time
 
         # Calculate RPM
-        rpm = ((rpm_count / 2) / elapsed_time * 60)/6
-        print("RPM: {rpm}")
+        rpm = int(((rpm_count / 2) / elapsed_time * 60)/5.7)
+        print("RPM:",rpm)
 
         # Reset RPM count
         rpm_count = 0
