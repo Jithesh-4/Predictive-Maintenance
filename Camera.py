@@ -5,19 +5,19 @@ import cv2
 import random
 
 # Replace with your Firebase project credentials
-cred = credentials.Certificate("/home/pi/Desktop/pmain/predictive-maintainence-1841d-firebase-adminsdk-oejc1-37178fae8b.json")
-firebase_admin.initialize_app(cred, {'databaseURL': 'https://fir-demo-c7e7a-default-rtdb.firebaseio.com/sensor-values'})
+cred = credentials.Certificate("/home/pi/Desktop/pmain/fir-demo-c7e7a-firebase-adminsdk-ettih-bb31e7dd26.json")
+firebase_admin.initialize_app(cred, {'databaseURL': 'https://fir-demo-c7e7a-default-rtdb.firebaseio.com/'})
 
 # Define the path in the Firebase Realtime Database
-belt = '/beltPosition'
-current = '/current'
-position = '/position'
-rpm = '/rpm'
-sound = '/sound'
-temp = '/thermometer'
-vis = '/oilViscosity'
-volt = '/voltage'
-motor = '/motorTemp'
+belt = '/sensor-values/beltPosition'
+current = '/sensor-values/current'
+position = '/sensor-values/position'
+rpm = '/sensor-values/rpm'
+sound = '/sensor-values/sound'
+temp = '/sensor-values/thermometer'
+vis = '/sensor-values/oilViscosity'
+volt = '/sensor-values/voltage'
+motor = '/sensor-values/motorTemp'
 
 count = 0
 sensor1_value = 0
