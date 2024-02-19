@@ -3,6 +3,7 @@ from firebase_admin import credentials, db
 import time
 import cv2
 import random
+import threading
 
 # Replace with your Firebase project credentials
 cred = credentials.Certificate("/home/pi/Desktop/pmain/fir-demo-c7e7a-firebase-adminsdk-ettih-bb31e7dd26.json")
@@ -19,7 +20,7 @@ vis = '/sensor-values/oilViscosity'
 volt = '/sensor-values/voltage'
 motor = '/sensor-values/motorTemp'
 
-count = 0
+#count = 0
 sensor1_value = 0
 sensor2_value = 0
 sensor3_value = 0
@@ -42,6 +43,42 @@ if not cap.isOpened():
     print("Error: Could not open the webcam.")
     exit()
 
+def retrieve_data():
+    while True:
+        # Get data from Firebase
+        data0 = db.reference(belt).get()
+        data1 = db.reference(current).get()
+        data2 = db.reference(position).get()
+        data3 = db.reference(rpm).get()
+        data4 = db.reference(sound).get()
+        data5 = db.reference(temp).get()
+        data6 = db.reference(vis).get()
+        data7 = db.reference(volt).get()
+        data8 = db.reference(motor).get()
+        
+        print("Belt:", data0)
+        print("Current:", data1)
+        print("Position:", data2)
+        print("RPM:", data3)
+        print("Sound Decibel:", data4)
+        print("Temperature:", data5)
+        print("Viscosity:", data6)
+        print("Voltage:", data7)
+        print("Motor Temperature:", data8)
+
+        sensor1_value = data0
+        sensor2_value = data1
+        sensor3_value = data2
+        sensor4_value = data3
+        sensor5_value = data4
+        sensor6_value = data5
+        sensor7_value = data6
+        sensor8_value = data7
+        sensor9_value = data8
+
+data_thread = threading.Thread(target=retrieve_data)
+data_thread.start()
+
 while True:
     ret, frame = cap.read()
 
@@ -49,7 +86,7 @@ while True:
         print("Error: Could not read a frame.")
         break
     
-    if count == 15:
+    """if count == 15:
         # Get data from Firebase
         data0 = db.reference(belt).get()
         data1 = db.reference(current).get()
@@ -85,7 +122,7 @@ while True:
         sensor8_value = data7
         sensor9_value = data8
 
-        count = 0
+        count = 0"""
     # Draw rectangles and labels for each sensor
     cv2.rectangle(frame, (1100, 290), (1250, 390), (255, 0, 0), 2)
     cv2.putText(frame, f"Belt: {sensor1_value}", (1100, 280), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
@@ -118,7 +155,7 @@ while True:
     frame = cv2.resize(frame, (display_width, display_height))
 
     cv2.imshow('Webcam', frame)
-    count = count + 1
+    #count = count + 1
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
