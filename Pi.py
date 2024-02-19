@@ -4,7 +4,7 @@ from firebase_admin import credentials, initialize_app, db
 
 # Replace the following with your Firebase project credentials
 cred = credentials.Certificate("/home/pi/Desktop/pmain/fir-demo-c7e7a-firebase-adminsdk-ettih-bb31e7dd26.json")
-firebase_app = initialize_app(cred, {"databaseURL": "https://fir-demo-c7e7a-default-rtdb.firebaseio.com/"})
+firebase_app = initialize_app(cred, {"databaseURL": "https://fir-demo-c7e7a-default-rtdb.firebaseio.com/sensor-values"})
 
 # Replace this with the path where you want to store sensor data in Firebase
 sensor_data_ref = db.reference("/")
